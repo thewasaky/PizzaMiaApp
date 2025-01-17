@@ -3,7 +3,9 @@ package com.example.pizzamia.views
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocationOn
@@ -27,23 +29,12 @@ fun MainMenu(onOptionSelected: (Int) -> Unit, onLogout: () -> Unit) {
         }
     ) { paddingValues ->
         val options = listOf(
-            "Registrar Etiqueta",
-            "Actualizar Cantidad",
-            "Ubicar Etiqueta",
-            "Escaneo Masivo",
-            "Reasignar Etiqueta",
-            "Imprimir Etiqueta",
-            "Etiquetas Registradas"
-            //"Cerrar Sesión"
+            "Mis checadas",
+            "QR",
         )
         val icons = listOf(
-            Icons.Default.Add,
-            Icons.Default.Edit,
-            Icons.Default.LocationOn,
-            Icons.Default.Search,
             Icons.Default.Info,
-            Icons.Default.Send,
-            Icons.Default.Menu
+            Icons.Default.AccountBox
         )
 
         LazyVerticalGrid(

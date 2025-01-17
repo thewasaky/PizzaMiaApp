@@ -10,11 +10,12 @@ class SessionManager(context: Context) {
 
     // Clave para verificar el estado de autenticación
     private val TOKEN = "token" ;
-
+    private val USERNAME = "username" ;
     // Guardar el estado de sesión
-    fun saveLoginStatus(token:String) {
+    fun saveLoginStatus(token:String, username:String) {
         val editor = sharedPreferences.edit()
         editor.putString(TOKEN, token)
+        editor.putString(USERNAME, username)
         editor.apply()
     }
 
@@ -29,7 +30,7 @@ class SessionManager(context: Context) {
     }
 
     fun getUserName(): String? {
-        return decodeJwtUsr(sharedPreferences.getString(TOKEN, null) ?: "")?.optString("NombreUsuario")
+        return sharedPreferences.getString(USERNAME, null)
     }
 
     fun isTokenExpired(): Boolean {
@@ -39,12 +40,6 @@ class SessionManager(context: Context) {
         val currentTime = System.currentTimeMillis() / 1000
         return exp.toLong() < currentTime
 
-    }
-
-    private fun decodeJwtUsr(token: String): JSONObject? {
-        val decodedPayload = com.example.pizzamia.views.decodeJwt(token)
-        val userdataString = decodedPayload?.optString("http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata")
-        return userdataString?.let { JSONObject(it) }
     }
 
     private fun decodeJwtExp(token: String): String? {

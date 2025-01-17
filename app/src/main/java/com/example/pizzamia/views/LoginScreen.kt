@@ -42,8 +42,8 @@ fun decodeJwt(token: String): JSONObject? {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(is401:Boolean=false,onLoginSuccess: () -> Unit,) {
-    var username by remember { mutableStateOf("janchondo") }
-    var password by remember { mutableStateOf("1234") }
+    var username by remember { mutableStateOf("sandrahl") }
+    var password by remember { mutableStateOf("220774") }
     var showError by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
@@ -62,16 +62,17 @@ fun LoginScreen(is401:Boolean=false,onLoginSuccess: () -> Unit,) {
                 val response = loginApi.login(loginRequest);
                 // Verificar si la respuesta fue exitosa
                 if (response.isSuccessful) {
-                    val token = response.body()?.token
+                    val token = response.body()?.data?.token
+                    val nombre=response.body()?.data?.name
                     if (token != null) {
                         // Guardar el token o realizar cualquier otra acción
-                        sessionManager.saveLoginStatus(token)
-                        val decodedPayload = decodeJwt(token)
-                        val userdataString = decodedPayload?.optString("http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata")
-                        val userdataJson = userdataString?.let { JSONObject(it) }
-                        val nombreUsuario = userdataJson?.optString("NombreUsuario") ?: "Usuario"
-                        Toast.makeText(context, "Bienvenido $nombreUsuario", Toast.LENGTH_LONG).show()
-                        onLoginSuccess()
+                        if (nombre != null) {
+                            sessionManager.saveLoginStatus(token,nombre)
+                            Toast.makeText(context, "Bienvenido $nombre", Toast.LENGTH_LONG).show()
+                            onLoginSuccess()
+                        }else{
+                            Toast.makeText(context, "Error: nombre no encontrado.", Toast.LENGTH_LONG).show()
+                        }
                     } else {
                         Toast.makeText(context, "Error: token no encontrado.", Toast.LENGTH_LONG).show()
                     }
@@ -102,7 +103,7 @@ fun LoginScreen(is401:Boolean=false,onLoginSuccess: () -> Unit,) {
     ) {
         // Logo de la empresa (si está configurado)
         Image(
-            painter = painterResource(id = R.drawable.logo_aircraft), // Reemplaza con el nombre real del logo
+            painter = painterResource(id = R.drawable.logopaginasandra), // Reemplaza con el nombre real del logo
             contentDescription = "Logo de la empresa",
             modifier = Modifier
                 .size(120.dp)

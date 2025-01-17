@@ -14,7 +14,8 @@ data class LoginResponse(
 )
 
 data class objData(
-    val token: String
+    val token: String,
+    val name: String
 )
 
 interface LoginApi {

@@ -22,7 +22,7 @@ fun AppBar(userName: String, onLogout: () -> Unit) {
             ) {
                 // Logo a la izquierda
                 Icon(
-                    painter = painterResource(id = R.drawable.logo_blanco), // Reemplaza con el ID de tu logo
+                    painter = painterResource(id = R.drawable.logopaginasandra), // Reemplaza con el ID de tu logo
                     contentDescription = "Logo",
                     tint = Color.Unspecified, // Mantén los colores originales del logo
                     modifier = Modifier
